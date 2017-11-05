@@ -5,18 +5,19 @@ public class FunctionalTest {
 
     @BeforeClass
     public static void setup() {
-        String port = System.getProperty("server.port");
-        if (port == null) {
-            RestAssured.port = Integer.valueOf(8080);
-        }
-        else{
-            RestAssured.port = Integer.valueOf(port);
-        }
+//      Initial port configuration - currently no need for that
 
+//        String port = System.getProperty("server.port");
+//        if (port == null) {
+//            RestAssured.port = Integer.valueOf(8080);
+//        }
+//        else{
+//            RestAssured.port = Integer.valueOf(port);
+//        }
 
         String basePath = System.getProperty("server.base");
-        if(basePath==null){
-            basePath = "/accounts/";
+        if(basePath == null){
+            basePath = "/";
         }
         RestAssured.basePath = basePath;
 
@@ -25,7 +26,5 @@ public class FunctionalTest {
             baseHost = "http://35.197.241.56";
         }
         RestAssured.baseURI = baseHost;
-
     }
-
 }
