@@ -9,4 +9,11 @@ public class ExampleTest extends FunctionalTest {
         given().when().get("/accounts").then().statusCode(200);
     }
 
+    @Test
+    public void smokeTestGetAccount() {
+        given().when().get("/accounts/raav88@interia.pl").then().statusCode(200);
+    }
+
+
+
 }
