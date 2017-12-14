@@ -1,3 +1,8 @@
 *** Variables ***
 ${rejestracjaLink}    register.php
 ${przypomnienieLink}    forgot.php
+${logowanieLink}    login.php
+${taigaLink}      https://tree.taiga.io/project/pawelkapuscinski-markiet-1/
+${testLink}       http://testarena.markiet.pl
+${gitLink}        https://github.com/patkorek/WSBGroupProject
+${googleLink}     https://drive.google.com/drive/folders/0B15636UFBropMFpWMV94Q09KYTg

@@ -15,10 +15,10 @@ ${passGood}       zaq1@WSX
 *** Test Cases ***
 Projekty
     Click Element    ${projektyId}
-    Wait Until Keyword Succeeds    5    1    Page Should Contain Link    https://tree.taiga.io/project/pawelkapuscinski-markiet-1/
-    Page Should Contain Link    http://testarena.markiet.pl
-    Page Should Contain Link    https://github.com/patkorek/WSBGroupProject
-    Page Should Contain Link    https://drive.google.com/drive/folders/0B15636UFBropMFpWMV94Q09KYTg
+    Wait Until Keyword Succeeds    5    1    Page Should Contain Link    ${taigaLink}
+    Page Should Contain Link    ${testLink}
+    Page Should Contain Link    ${gitLink}
+    Page Should Contain Link    ${googleLink}
 
 [0]Logowanie
     Logowanie    ${EMPTY}    ${EMPTY}
@@ -32,7 +32,7 @@ Projekty
 
 [+]Logowanie
     Logowanie    ${emailGood}    ${passGood}
-    Wait Until Keyword Succeeds    5    1    Page Should Contain Element    id=nav_konto
+    Wait Until Keyword Succeeds    5    1    Page Should Contain Element    ${kontoId}
 
 [0]Rejestracja
     Rejestracja    ${EMPTY}    ${EMPTY}    ${EMPTY}    ${EMPTY}    ${EMPTY}    ${EMPTY}
@@ -45,7 +45,7 @@ Projekty
 [-]Rejestracja
     Rejestracja    Jan    Kowalski    ul    13    00000    Warszawa
     ...    1850/03/15    abc    123456789    ${passTest}    ${passTest}
-    Wait Until Keyword Succeeds    5    1    Page Should Contain    Pole ulica musi zawierać co najmniej 3 znaki
+    Wait Until Keyword Succeeds    5    1    Page Should Contain    Pole ulica musi zawierać przynajmniej 3 znaki
     Page Should Contain    Pole kod pocztowy jest nieprawidłowe
     Page Should Contain    Pole e-mail jest błędnie wypełnione
 
@@ -61,7 +61,7 @@ Projekty
     Wait Until Keyword Succeeds    5    1    Page Should Contain    Użytkownik o tym adresie email już istnieje
 
 [0]Przypomnienie
-    Przypomnienie    ${emailGood}
+    Przypomnienie    ${EMPTY}
     Wait Until Keyword Succeeds    5    1    Page Should Contain    Podaj nazwę użytkownika
 
 [-]Przypomnienie
@@ -75,34 +75,58 @@ Projekty
 Logowanie do rejestracji
     Click Element    ${logowanieId}
     Wait Until Keyword Succeeds    5    1    Page Should Contain    Zaloguj się
-    Click Link    register.php
+    Click Link    ${rejestracjaLink}
     Wait Until Keyword Succeeds    5    1    Page Should Contain    Zarejestruj się
 
 Logowanie do przypomnienia
     Click Element    ${logowanieId}
     Wait Until Keyword Succeeds    5    1    Page Should Contain    Zaloguj się
-    Click Link    forgot.php
+    Click Link    ${przypomnienieLink}
     Wait Until Keyword Succeeds    5    1    Page Should Contain    Zresetuj hasło
 
 Rejestracja do logowania
     Click Element    ${rejestracjaId}
     Wait Until Keyword Succeeds    5    1    Page Should Contain    Zarejestruj się
-    Click Link    login.php
+    Click Link    ${logowanieLink}
     Wait Until Keyword Succeeds    5    1    Page Should Contain    Zaloguj się
 
 Przypomnienie do logowania
-    Click Element    ${przypomnienieId}
+    Click Element    ${logowanieId}
+    Wait Until Keyword Succeeds    5    1    Page Should Contain    Zaloguj się
+    Click Link    ${przypomnienieLink}
     Wait Until Keyword Succeeds    5    1    Page Should Contain    Zresetuj hasło
-    Click Link    login.php
+    Click Link    ${logowanieLink}
     Wait Until Keyword Succeeds    5    1    Page Should Contain    Zaloguj się
 
-Szukaj
-    Click Element    ${logowanieId}
-    Comment    Wait Until Keyword Succeeds    5    1    Page Should Contain
+[0]Szukaj
+    Click Element    ${szukajId}
+    Wait Until Keyword Succeeds    5    1    Page Should Contain Element    ${szukajFiltryId}
+    Wait Until Keyword Succeeds    5    1    Click Button    ${szukajBtn}
+    Wait Until Keyword Succeeds    5    1    Page Should Contain Element    //*[@class="modal-content"]
+    Page Should Contain    Podaj przynajmniej jeden parametr do szukania!
 
-Wystaw
-    Click Element    ${logowanieId}
-    Comment    Wait Until Keyword Succeeds    5    1    Page Should Contain
+[-]Szukaj
+    Click Element    ${szukajId}
+    Wait Until Keyword Succeeds    5    1    Page Should Contain Element    ${szukajFiltryId}
+    Wait Until Keyword Succeeds    5    1    Click Button    ${szukajBtn}
+    Wait Until Keyword Succeeds    5    1    Page Should Contain Element    //*[@class="modal-content"]
+    Page Should Contain    Brak ofert spełniających podane kryteria
+
+[+]Szukaj
+    Click Element    ${szukajId}
+    Wait Until Keyword Succeeds    5    1    Page Should Contain Element    ${szukajFiltryId}
+    Click Element    ${szukajTypId}
+    Capture Page Screenshot
+    Comment    Select From List    ${szukajKategoriaId}    data-original-index="2"
+    Comment    Input Text    ${szukajNazwaId}    Elektryczna
+    Comment    Input Text    ${szukajKwotaId}    50
+    Comment    Input Text    ${szukajUlicaId}    Grunwaldzka
+    Comment    Input Text    ${szukajNumerId}    238
+    Comment    Input Text    ${szukajKodId}    80-266
+    Comment    Input Text    ${szukajMiastoId}    Gdańsk
+    Comment    Wait Until Keyword Succeeds    5    1    Click Button    ${szukajBtn}
+    Comment    Wait Until Keyword Succeeds    5    1    Page Should Contain Element    //*[@class="modal-content"]
+    Comment    Page Should Contain    Podaj przynajmniej jeden parametr do szukania!
 
 *** Keywords ***
 Test setup
@@ -111,7 +135,7 @@ Test setup
     Wait Until Keyword Succeeds    5    1    Page Should Contain Image    ./img/uslugi2.png
 
 Test teardown
-    Comment    Close Browser
+    Close Browser
 
 Logowanie
     [Arguments]    ${user}    ${pass}
