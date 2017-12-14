@@ -1,0 +1,3 @@
+*** Variables ***
+${rejestracjaLink}    register.php
+${przypomnienieLink}    forgot.php

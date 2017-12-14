@@ -1,0 +1,5 @@
+*** Variables ***
+${logowanieBtn}    //*[@class="btn btn-lg btn-success btn-block"]
+${rejestracjaBtn}    //*[@class="btn btn-default"]
+${przypomnienieBtn}    //*[@class="btn btn-link pull-right"]
+${akceptacjaBtn}    //*[@for='agree']
